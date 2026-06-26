@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>近期專案實驗 · 介紹影片 ｜ Making-of</title>
+<meta name="description" content="一支由 AI 全程企劃、錄製、配音、剪輯的成果介紹影片——製作歷程、腳本發展、版本紀錄與踩雷全紀錄。Henry × LivingTech。">
+<meta property="og:title" content="近期專案實驗 · 介紹影片 ｜ Making-of">
+<meta property="og:description" content="從盤點、錄製、配音到剪輯，全程由 AI 自動完成的成果影片，完整製作歷程公開。">
+<meta property="og:type" content="website">
+<style>
+  :root{
+    --bg:#0c0e13; --panel:#141821; --panel2:#1b2030; --ink:#eef1f6; --muted:#8a93a6;
+    --line:#2a3145; --amber:#f5b942; --cyan:#46d6c8; --pink:#ff6b8b; --violet:#9b8cff; --green:#5ad19a;
+    --mono:"SF Mono",ui-monospace,"JetBrains Mono",Menlo,Consolas,monospace;
+    --sans:"PingFang TC","Noto Sans TC",system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:
+      radial-gradient(1200px 620px at 82% -8%,rgba(155,140,255,.12),transparent 60%),
+      radial-gradient(960px 520px at -8% 16%,rgba(70,214,200,.09),transparent 55%),
+      var(--bg);
+    color:var(--ink);font-family:var(--sans);line-height:1.75;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px 100px}
+  a{color:var(--cyan);text-decoration:none} a:hover{text-decoration:underline}
+  h2{font-size:24px;font-weight:800;letter-spacing:.5px;margin:0}
+  .sec{margin:62px 0 0}
+  .sec-h{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+  .sec-h .no{font-family:var(--mono);font-size:13px;color:var(--bg);background:var(--amber);font-weight:800;padding:4px 11px;border-radius:6px}
+  .sec-h .ln{flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+
+  /* hero */
+  header{padding:54px 0 8px}
+  .kicker{font-family:var(--mono);font-size:13px;color:var(--cyan);letter-spacing:2px;margin-bottom:10px}
+  .h1{font-size:clamp(30px,5.5vw,52px);font-weight:900;line-height:1.15;margin:0 0 14px;letter-spacing:.5px}
+  .h1 .g{background:linear-gradient(90deg,var(--amber),var(--pink),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lead{color:#cdd3df;font-size:17px;max-width:760px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 0}
+  .chip{font-family:var(--mono);font-size:12px;color:var(--ink);background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:6px 13px}
+  .chip b{color:var(--amber)}
+
+  /* video */
+  .video{position:relative;padding-bottom:56.25%;height:0;margin:26px 0 0;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 24px 60px rgba(0,0,0,.45)}
+  .video iframe{position:absolute;inset:0;width:100%;height:100%}
+  .vcap{color:var(--muted);font-size:13.5px;margin-top:10px;font-family:var(--mono)}
+
+  /* project grid */
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  @media(max-width:720px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;position:relative;overflow:hidden}
+  .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent,var(--amber))}
+  .card .no{font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .card h3{margin:4px 0 2px;font-size:18px}
+  .card .en{font-family:var(--mono);font-size:11.5px;color:var(--cyan);letter-spacing:1px}
+  .card p{margin:9px 0 10px;font-size:14px;color:#c7cdd9}
+  .card .go{font-family:var(--mono);font-size:12.5px}
+
+  /* pipeline */
+  .flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:18px}
+  .step{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+  .step .n{font-family:var(--mono);font-size:12px;color:var(--amber)}
+  .step b{display:block;margin:5px 0 4px;font-size:15px}
+  .step span{font-size:13px;color:var(--muted)}
+  .tech{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--cyan);border-radius:10px;padding:14px 18px;margin-top:8px}
+  .tech li{margin:7px 0;font-size:14.5px;color:#cdd3df}
+  .tech code{font-family:var(--mono);font-size:12.5px;background:#0a0c11;border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--cyan)}
+
+  /* failure paths */
+  .fail{background:linear-gradient(180deg,rgba(255,107,139,.06),transparent);border:1px solid var(--line);border-left:3px solid var(--pink);border-radius:10px;padding:6px 18px;margin-top:8px}
+  .fail .row{padding:13px 0;border-bottom:1px dashed var(--line)}
+  .fail .row:last-child{border-bottom:0}
+  .fail .bug{font-weight:700;color:#ffd0da}
+  .fail .fix{font-size:14px;color:#c7cdd9;margin-top:3px}
+  .fail .fix b{color:var(--green);font-family:var(--mono);font-size:12px;margin-right:6px}
+
+  /* changelog */
+  .ver{border-left:2px solid var(--line);margin-left:8px;padding-left:22px}
+  .rel{position:relative;padding:4px 0 22px}
+  .rel::before{content:"";position:absolute;left:-30px;top:9px;width:13px;height:13px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 4px var(--bg)}
+  .rel.v2::before{background:var(--cyan)} .rel.short::before{background:var(--violet)}
+  .rel .tag{font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .rel h4{margin:3px 0 6px;font-size:17px}
+  .rel ul{margin:0;padding-left:18px} .rel li{font-size:14px;color:#c7cdd9;margin:4px 0}
+
+  /* timeline */
+  .tl{counter-reset:s} .tl .e{display:flex;gap:14px;padding:11px 0;border-bottom:1px solid var(--line)}
+  .tl .e:last-child{border-bottom:0}
+  .tl .e .d{font-family:var(--mono);font-size:11.5px;color:var(--amber);min-width:74px;padding-top:3px}
+  .tl .e .t{font-size:14.5px;color:#cdd3df}
+  .tl .e .t b{color:var(--ink)}
+
+  /* script */
+  .acts{display:grid;gap:12px}
+  .act{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 18px}
+  .act .ah{font-weight:800;color:var(--amber);font-size:15px;margin-bottom:6px}
+  .act .it{font-size:14px;color:#c7cdd9;padding:3px 0}
+  .act .it b{color:var(--ink)}
+  details{margin-top:12px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:6px 18px}
+  summary{cursor:pointer;font-weight:700;padding:10px 0;color:var(--cyan)}
+  details .vo{font-size:14px;color:#c7cdd9;border-left:2px solid var(--violet);padding:6px 0 6px 14px;margin:8px 0}
+  details .vo b{color:var(--ink)}
+
+  footer{margin-top:70px;border-top:1px solid var(--line);padding-top:26px;color:var(--muted);font-size:14px;display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between}
+  .note{color:var(--muted);font-size:13.5px;margin-top:10px}
+  .ai-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(90deg,rgba(245,185,66,.14),rgba(155,140,255,.14));border:1px solid var(--line);border-radius:999px;padding:7px 15px;font-size:13.5px;font-family:var(--mono);margin-top:18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">HENRY × LIVINGTECH ‧ MAKING-OF</div>
+  <h1 class="h1">近期專案實驗 · <span class="g">介紹影片</span></h1>
+  <p class="lead">這支影片的特別之處：從<b>盤點專案、撰寫腳本、真實錄製、配音，到剪輯與配樂</b>，全程由 AI 自動完成——連這頁製作紀錄也是。下面是成片，以及完整的製作歷程、腳本發展與踩雷紀錄。</p>
+  <div class="chips">
+    <span class="chip">9 個線上專案</span>
+    <span class="chip">主片 <b>3:42 · 1080p</b></span>
+    <span class="chip">直式短影音 <b>9:16 · 47s</b></span>
+    <span class="chip">配音 <b>雲哲（台灣男聲）</b></span>
+    <span class="chip">字幕＋自製配樂</span>
+  </div>
+  <div class="ai-badge">🤖 全程 AI 自動製作 · 企劃 → 錄製 → 配音 → 剪輯</div>
+
+  <div class="video">
+    <iframe src="https://www.youtube.com/embed/8uiNqhIfnZc?start=9" title="近期專案實驗 介紹影片" loading="lazy"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div class="vcap">▶ 成片嵌入自 YouTube（youtu.be/8uiNqhIfnZc）· 另有直式 9:16 短影音供 IG Reels／YT Shorts 使用</div>
+</header>
+
+<!-- 九個專案 -->
+<section class="sec">
+  <div class="sec-h"><span class="no">01</span><h2>影片裡的九個專案</h2><span class="ln"></span></div>
+  <div class="grid">
+    <div class="card" style="--accent:var(--amber)"><div class="no">幕一 · 把課本變成教具</div><h3>生活科技數位教具</h3><div class="en">19 INTERACTIVE TOOLS</div><p>19 個互動工具，線鋸機到 3D 列印，每個都走「認識→安全測驗→動畫→模擬→創作」五關卡。</p><a class="go" href="https://henrychao521.github.io/livingtech-tools/" target="_blank">開啟網站 →</a></div>
+    <div class="card" style="--accent:var(--amber)"><div class="no">幕一</div><h3>PC13110 工程設計學習平台</h3><div class="en">ENGINEERING DESIGN</div><p>把高中課本的工程設計流程做成可點選的關卡，從 AI 趨勢、CAD、結構模擬到 ESP32 燒錄。</p><a class="go" href="https://henrychao521.github.io/pc13110-platform/" target="_blank">開啟網站 →</a></div>
+    <div class="card" style="--accent:var(--amber)"><div class="no">幕一</div><h3>外科無影燈光學模擬</h3><div class="en">SHADOWLESS OPTICS</div><p>拉滑桿即時看本影如何被多燈補光稀釋成半影，可切 2D 光線追跡與 3D 手術場景。</p><a class="go" href="https://henrychao521.github.io/shadowless-lamp-sim/" target="_blank">開啟網站 →</a></div>
+    <div class="card" style="--accent:var(--cyan)"><div class="no">幕二 · 連上真實世界的資料</div><h3>台灣工程地景探索</h3><div class="en">GEOGUESS GAME</div><p>GeoGuess 風格遊戲：看橋樑、水壩、風場的衛星／街景，在地圖上猜位置。200 景點、四大主題。</p><a class="go" href="https://henrychao521.github.io/taiwan-engineering-geo/" target="_blank">開啟網站 →</a></div>
+    <div class="card" style="--accent:var(--cyan)"><div class="no">幕二</div><h3>北台灣水文即時監測</h3><div class="en">REAL-TIME DATA</div><p>串接水利署水庫水情、氣象署天氣、空品三路 API，桌機與手機各一套版面。</p><a class="go" href="https://github.com/henrychao521/hydro-monitor" target="_blank">GitHub repo →</a></div>
+    <div class="card" style="--accent:var(--cyan)"><div class="no">幕二</div><h3>Living Portal 即時監控入口</h3><div class="en">LIVE DASHBOARD</div><p>台鐵、高鐵、YouBike、地震、空品、海象、太空站全收進一個可展開的儀表板。</p><a class="go" href="https://henrylivingtech.com/" target="_blank">henrylivingtech.com →</a></div>
+    <div class="card" style="--accent:var(--violet)"><div class="no">幕三 · AI 與自造的前沿實驗</div><h3>握筆姿勢分析系統</h3><div class="en">AI PEN-GRIP COACH</div><p>MediaPipe 手部骨架＋自訓 YOLO 偵測筆尖＋十元硬幣絕對校正，即時判斷握姿、提示修正。</p><a class="go" href="https://github.com/henrychao521/grip-system" target="_blank">GitHub repo →</a></div>
+    <div class="card" style="--accent:var(--violet)"><div class="no">幕三</div><h3>AI 自動操作 CAD：Onshape 重製</h3><div class="en">HUMAN-AI CAD</div><p>讓 AI 自己讀 CAD 課本、操作 Onshape 重做教學影片；公開歷程、錯誤紀錄與重製成果。</p><a class="go" href="https://henrychao521.github.io/onshape-tutorials/" target="_blank">開啟網站 →</a></div>
+  </div>
+  <p class="note">＋ 樞紐：<a href="https://henrychao521.github.io/" target="_blank">個人作品站 henrychao521.github.io</a>（影片片頭片尾的作品牆）。</p>
+</section>
+
+<!-- 製作流程 -->
+<section class="sec">
+  <div class="sec-h"><span class="no">02</span><h2>製作流程：AI 怎麼做出這支片</h2><span class="ln"></span></div>
+  <div class="flow">
+    <div class="step"><div class="n">STEP 1</div><b>盤點專案</b><span>WebFetch＋git log 找出近兩個月有實質開發的線上專案。</span></div>
+    <div class="step"><div class="n">STEP 2</div><b>真實錄製</b><span>自寫 CDP 無頭引擎，把每個網站「真的跑起來」並擷取互動。</span></div>
+    <div class="step"><div class="n">STEP 3</div><b>撰寫腳本</b><span>三幕結構，先產膠卷分鏡審稿頁給作者確認。</span></div>
+    <div class="step"><div class="n">STEP 4</div><b>AI 配音</b><span>edge-tts 雲哲台灣男聲，逐段生成。</span></div>
+    <div class="step"><div class="n">STEP 5</div><b>逐段剪輯</b><span>PIL 逐格疊字幕／下標，Ken-Burns 補長。</span></div>
+    <div class="step"><div class="n">STEP 6</div><b>配樂組裝</b><span>numpy 自製襯底，串接＋混音輸出，再延伸直式短影音。</span></div>
+  </div>
+  <ul class="tech">
+    <li><b>真實互動、非截圖：</b>自寫 <code>capture.js</code> 用 Node 內建 WebSocket 驅動無頭 Chrome 的 CDP，自控截圖時機 → 能乾淨錄到「拉無影燈滑桿看陰影變化」「玩地景遊戲」「點切即時面板」等真實操作，也解決即時頁用 <code>--screenshot</code> 會卡死的問題。</li>
+    <li><b>字幕走 PIL：</b>這台機器的 ffmpeg 沒有 drawtext／libass，所以字幕、下標卡、幕標一律以 <code>Pillow</code> 逐格預渲透明序列再單一 overlay 疊上。</li>
+    <li><b>配音走 edge-tts：</b>macOS 內建語音的繁中只有「美佳」可用且偏正式，改用微軟神經語音 <code>zh-TW-YunJheNeural</code>（雲哲）得到自然口語男聲。</li>
+    <li><b>視覺補長：</b>旁白比畫面長時，從高解析畫格做 Ken-Burns 運鏡補滿；水文儀表板中央地圖無頭載不出，改裁「左右資料欄並排」呈現。</li>
+  </ul>
+</section>
+
+<!-- 踩雷 -->
+<section class="sec">
+  <div class="sec-h"><span class="no">03</span><h2>踩雷紀錄 · 失敗路徑</h2><span class="ln"></span></div>
+  <p class="note" style="margin-top:-8px">失敗也是學習內容。這支片中途踩過、又一一解掉的雷：</p>
+  <div class="fail">
+    <div class="row"><div class="bug">字幕、下標全程不顯示</div><div class="fix"><b>因</b>PIL 單格圖片輸入只有 t=0 一格，fade 直接把整張 alpha 設成 0 → 全透明。<br><b>解</b>改成逐格預渲透明序列（每格算好淡入淡出）再單一 overlay。</div></div>
+    <div class="row"><div class="bug">某段 ffmpeg 失控、檔案爆到 422MB、吃 722% CPU</div><div class="fix"><b>因</b>把無限長的 <code>color=</code> 背景源當成 overlay 主軌，輸出永不結束。<br><b>解</b>overlay 加 <code>shortest=1</code> 並補輸出 <code>-t</code> 邊界。</div></div>
+    <div class="row"><div class="bug">開場標題片長爆成 324 秒</div><div class="fix"><b>因</b><code>zoompan</code> 的 <code>d</code> 對「loop 影像」設成總幅數，產生 N×N 幅。<br><b>解</b>改 <code>d=1</code>、加輸入 framerate 與輸出 <code>-t</code>。</div></div>
+    <div class="row"><div class="bug">水文監測中央是一片白</div><div class="fix"><b>因</b>Leaflet 地圖瓦片在無頭環境載不出來。<br><b>解</b>精準量測欄位邊界，改取左右資料欄並排、深底置中，避開地圖。</div></div>
+    <div class="row"><div class="bug">想換更自然的語音卻只有空檔</div><div class="fix"><b>因</b>macOS <code>say</code> 列出的 Sandy／Shelley 等其實沒安裝，只吐 0.67 秒。<br><b>解</b>改用 edge-tts 線上神經語音，先試聽四款再定雲哲。</div></div>
+  </div>
+</section>
+
+<!-- 腳本發展 -->
+<section class="sec">
+  <div class="sec-h"><span class="no">04</span><h2>腳本發展</h2><span class="ln"></span></div>
+  <p class="note" style="margin-top:-8px">先盤點每個專案內容，寫成三幕結構，做成膠卷分鏡審稿頁給作者逐句確認後才開拍。個人作品站作頭尾書擋。</p>
+  <div class="acts">
+    <div class="act"><div class="ah">片頭 → 幕一 · 把課本變成教具</div><div class="it"><b>①</b> 生活科技數位教具　<b>②</b> PC13110 工程設計平台　<b>③</b> 外科無影燈光學模擬</div></div>
+    <div class="act"><div class="ah">幕二 · 連上真實世界的資料</div><div class="it"><b>④</b> 台灣工程地景探索　<b>⑤</b> 北台灣水文即時監測　<b>⑥</b> Living Portal 監控入口</div></div>
+    <div class="act"><div class="ah">幕三 · AI 與自造的前沿實驗 → 片尾</div><div class="it"><b>⑦</b> 握筆姿勢分析系統　<b>⑧</b> AI 操作 CAD：Onshape 重製</div></div>
+  </div>
+  <details>
+    <summary>展開：最終版旁白逐字稿（節錄）</summary>
+    <div class="vo"><b>片頭：</b>大家好！又來到了近期專案實驗介紹時間。這兩個月，我把生活科技課本裡的每一個概念，變成打開瀏覽器就能動手玩的網頁⋯話不多說，先帶你快速看一輪！</div>
+    <div class="vo"><b>無影燈：</b>再來是一個比較進階的光學模擬：外科手術的無影燈，為什麼能消除陰影？答案是用很多顆燈從不同角度同時補光，把濃重的本影稀釋成幾乎看不見的半影⋯</div>
+    <div class="vo"><b>片尾：</b>⋯歡迎把想新增或想修改的建議，留在下面的留言區，我們一起讓它更好。我們下個專案見！對了——其實就連這部影片，從腳本、配音到剪輯，全都是 AI 自己完成的唷。</div>
+  </details>
+</section>
+
+<!-- 版本紀錄 -->
+<section class="sec">
+  <div class="sec-h"><span class="no">05</span><h2>版本紀錄</h2><span class="ln"></span></div>
+  <div class="ver">
+    <div class="rel"><div class="tag">v1 · 初版</div><h4>4:42 結構成形、首次出片</h4><ul>
+      <li>美佳（macOS 內建）配音，總長 4:17</li>
+      <li>個人作品站慢捲開場；片尾「歡迎拿去用、一起改」</li>
+      <li>9 專案三幕、字幕＋下標＋自製配樂</li></ul></div>
+    <div class="rel v2"><div class="tag">v2 · 改版（依作者 5 點回饋）</div><h4>口吻更日常、節奏更俐落，總長 3:42</h4><ul>
+      <li><b>用詞台灣化：</b>硬核→進階、點擊→點選、踩坑→遇到關卡</li>
+      <li><b>換語音：</b>改 edge-tts 雲哲台灣男聲，更口語、第一人稱作者感</li>
+      <li><b>新開場：</b>標題卡淡入＋8 專案快剪 montage＋「大家好！」開場白</li>
+      <li><b>新片尾：</b>邀請把建議留在留言區；收在「就連這部影片都是 AI 做的」</li></ul></div>
+    <div class="rel short"><div class="tag">延伸 · 短影音</div><h4>直式 9:16 · 47 秒</h4><ul>
+      <li>濃縮 9 專案亮點，模糊滿版背景＋清晰主畫面＋大字幕</li>
+      <li>IG Reels 與 YT Shorts 共用同一支</li></ul></div>
+  </div>
+</section>
+
+<!-- 討論歷程 -->
+<section class="sec">
+  <div class="sec-h"><span class="no">06</span><h2>討論歷程</h2><span class="ln"></span></div>
+  <div class="tl">
+    <div class="e"><div class="d">需求</div><div class="t">作者提出：<b>把近兩個月的實作成果拍成介紹影片</b>，請 AI 自己開專案、跑起來、錄畫面、出腳本確認後再剪。</div></div>
+    <div class="e"><div class="d">盤點 · 測試</div><div class="t">AI 盤點 9 個線上專案、實測螢幕錄影可行性，發現實機畫面雜亂 → <b>改走無頭 CDP 乾淨擷取</b>。</div></div>
+    <div class="e"><div class="d">確認範圍</div><div class="t">選定<b>完整版 9 專案／繁中配音／約 5 分鐘</b>，並做<b>膠卷分鏡審稿頁</b>給作者逐句確認腳本。</div></div>
+    <div class="e"><div class="d">錄製 · 剪輯</div><div class="t">CDP 錄製（含真實互動）→ TTS 配音 → PIL 逐格字幕 → 串接配樂 → <b>出 v1 成片</b>。</div></div>
+    <div class="e"><div class="d">作者回饋</div><div class="t">5 點修改：用詞台灣化、換口語語音、加開場動畫與快剪、片尾改邀請留言、收在 AI 生成梗 → <b>改版 v2</b>。</div></div>
+    <div class="e"><div class="d">延伸</div><div class="t">加做<b>直式 9:16 短影音</b>（IG/YT），並上傳 YouTube。</div></div>
+    <div class="e"><div class="d">發佈</div><div class="t">整理討論／腳本／版本紀錄為<b>本頁 making-of</b>，嵌入 YouTube 成片，發佈到 GitHub Pages。</div></div>
+  </div>
+</section>
+
+<footer>
+  <div>🤖 本頁與影片皆由 AI 自動製作 · Henry × LivingTech</div>
+  <div><a href="https://henrychao521.github.io/" target="_blank">個人作品站</a> ‧ <a href="https://github.com/henrychao521" target="_blank">GitHub</a> ‧ <a href="https://www.youtube.com/watch?v=8uiNqhIfnZc" target="_blank">YouTube 成片</a></div>
+</footer>
+
+</div>
+</body>
+</html>
